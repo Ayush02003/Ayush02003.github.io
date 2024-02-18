@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+        }
+        #main{
+            height: 610px;
+            width:100%;
+         background-image: url(bg.jpg);
+         background-size: cover;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+            font-size: 20px;
+        }
+        .lbl{
+            color: white;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            padding-top: 25%;
+            /* top: 28px; */
+            /* left: 32px; */
+        }
+
+        input:hover{
+            cursor: pointer;
+        }
+        .box{
+            position: absolute;
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            animation: boxanim linear;
+            z-index: 5;
+            font-size: 30px;
+            font-weight: 500;
+        }
+        @keyframes boxanim {
+            from{
+                bottom: -30px;
+            }
+            to{
+                bottom: 650px;
+            }
+        }
+        #option{
+            /* display: none; */
+            border: 2px solid rgb(255, 255, 255);
+            height: 180px;
+            width: 210px;
+            font-size: 20px;
+            padding-left: 55px;
+            box-sizing: border-box;
+            padding-top: 12px;
+            margin: auto;
+            margin-top: 200px;
+            color: white;
+            background-color: rgb(54, 49, 49);
+            border-radius: 20%;
+        }
+        label{
+            padding: 10px;
+        }
+        button{
+            padding: 2px 30px;
+            margin-top: 10px;
+            border: none;
+            font-size: 15px;
+        }
+        button:hover{
+            cursor: pointer;
+        }
+        .head{
+            padding: 10px 20px 10px;
+            font-size: 20px;
+            background-color: rgb(44, 48, 45);
+            position: fixed;
+            width: 100%;
+            color: white;
+            z-index: 10;
+        }
+        footer{
+            background-color:rgb(17 ,20 ,19);
+            color: white;
+            position: fixed;
+            height: 30px;
+            width: 100%;
+            text-align: center;
+            bottom:0;
+            padding: 10px 20px 10px;
+            font-size: 20px;
+            z-index: 10;
+        }
+        .la:hover{
+            cursor: pointer;
+        }
+        ::selection{
+            background-color: white;
+            color: rgb(44, 48, 45);
+        }
+        .Loss{
+            color: white;
+        }
+        #result{
+            border: 2px solid rgb(255, 255, 255);
+            height: 110px;
+            width: 250px;
+            font-size: 20px;
+            padding-left: 25px;
+            box-sizing: border-box;
+            padding-top: 12px;
+            color: white;
+            margin: auto;
+            margin-top: 220px;
+            background-color: rgb(54, 49, 49);
+            border-radius: 15%;
+            display: none;
+        }
+        #done{
+            margin: 10px 0px 0px 50px;
+            padding: 4px 35px;
+        }
+        .effect{
+            transform: scale(0.5);
+            opacity: 0.5;
+            transition: 0.2;
+        }
+        audio{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="head">
+        Score : <label id="score">0</label>
+        <br>Loss : <label id="loss">0</label>
+    </div>
+        <audio controls autoplay id="aud" >
+            <source src="" type="audio/mp3"></audio>
+        </audio>
+        <audio controls autoplay id="aud1" >
+            <source src="Main.mp3" type="audio/mp3"></audio>
+        </audio>
+
+        <div id="option">
+            Difficulty : <br> <input type="radio" name="opt" onclick="select1()" id="easy" checked><label onclick="select1()" for="easy" class="la"> Easy</label><br>
+            <input type="radio"name="opt"   id="Medium"onclick="select1()" > <label for="Medium" class="la" onclick="select1()">Medium</label><br>
+            <input type="radio"name="opt"   id="Hard"onclick="select1()" > <label for="Hard" class="la" onclick="select1()">Hard</label>
+            <br>
+            <button onclick="start()">Start</button>
+        </div>
+        <bgsoung src="Main.mp3"></bgsoung>
+        <div id="result">
+            <label id="r1"></label><br>
+            <button id="done" onclick="reload()">Ok</button>
+        </div>
+        <footer>&copy; Copy Right - Ayush Patel</footer>
+    </div>
+</body>
+</html>
+<script>
+    var main = document.getElementById("main");
+    var br = document.createElement("br"); 
+    var r1 =  document.getElementById("r1");
+    var r2 = document.getElementById("result");
+    var time = 1500;
+    var dur = 5;
+    var loss = 0;
+    // var correctSound = new Audio("Main.mp3");
+    // correctSound.play();
+    // window.onload=function(){
+    //   document.getElementById("aud1").play();
+    // }
+        function select1(){
+            document.getElementById("aud").src="Select.wav";
+        }
+    function start(){
+        document.getElementById("aud1").src = "";
+        document.getElementById("aud").src = "Ok.mp3";  
+     if(document.getElementById("Medium").checked == true){
+     time = 1400;
+     dur = 4.5;
+    }
+     if(document.getElementById("Hard").checked == true){
+     time = 1300;
+    dur =3;}
+    // var create2 = setInterval(create,time);
+    document.getElementById("option").style.display = "none";
+    var create2 = setInterval(() =>{
+        min = 10;
+        max = 100; 
+        // var a = Math.ceil(Math.random() * 500);
+        // var b = Math.floor(Math.random() * 990);
+        var arr = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+        var c = Math.ceil(Math.random() * 1250);
+        var d =  Math.ceil(Math.random() * 25);
+        var clr1 =  Math.ceil(Math.random() * 50);
+        var clr2 =  Math.ceil(Math.random() * 150);
+        var clr3 =  Math.ceil(Math.random() * 200);
+        var box = document.createElement("div");
+        var lbl = document.createElement("label");
+        lbl.innerHTML = arr[d];
+        lbl.className = "lbl";
+        box.className = "box";
+        box.id = arr[d];
+        box.style.backgroundColor = "rgba("+clr1+","+(clr2)+","+(clr3)+",0.9)";
+        box.style.left = c+"px";
+        box.style.animationDuration = dur+"s";
+        box.appendChild(lbl);
+        main.appendChild(box);
+        var lost = setTimeout(() => {
+         main.removeChild(box);
+         loss++;
+         if(loss >= 10){
+            //  alert("You +Loss The Game");
+            r2.style.display = "block";
+             r1.innerHTML = "You Loss The Game";  
+             main.appendChild(br);
+             document.getElementById("loss").innerHTML= 10;
+             clearInterval(create2);
+             a=0;
+            //  box.style.display = "none";
+         }
+         else{
+            document.getElementById("loss").innerHTML= loss; 
+         document.getElementById("aud1").src = "Looser.mp3";  
+         }
+        }, (dur*1000)-500);
+    },time)
+
+            var a = 0;
+            document.addEventListener("keyup",function(){
+                key = event.keyCode;
+                var res = String.fromCharCode(key);
+                var e = document.getElementById(res);
+                var sp_code = e.innerHTML.charCodeAt(0);
+                setInterval(()=>{
+                        e.classList.toggle("effect");
+                },300)
+                setInterval(() => {
+                    main.removeChild(e);
+                }, 400);
+                document.getElementById("aud").src = "Nice.mp3";
+                a++;  
+            if(a >= 20){
+            //  alert("You Win The Game");
+             r2.style.display = "block";
+             r1.innerHTML = "You Win The Game";  
+             main.appendChild(br);
+             document.getElementById("score").innerHTML = 20;
+             clearInterval(create2);
+            //  clearTimeout(lost);
+            loss = 0;
+         } 
+         else{
+            document.getElementById("score").innerHTML = a;
+         }          
+            })
+        }
+           function reload(){
+            window.location.href = "Bubble.html";
+           } 
+</script>
